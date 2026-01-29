@@ -11,8 +11,19 @@ export function ProfessionalTemplate({ data }: { data: ResumeContent }) {
     >
       {/* Left Sidebar */}
       <aside className="w-1/3 bg-slate-800 text-white p-6 flex flex-col gap-6">
+        {/* Photo */}
+        {personalInfo.photo && (
+          <div className="mb-4 flex justify-center">
+            <img
+              src={personalInfo.photo}
+              alt={personalInfo.fullName}
+              className="w-32 h-32 rounded-full object-cover border-4 border-slate-600 shadow-lg"
+            />
+          </div>
+        )}
+
         {/* Header in Sidebar */}
-        <div className="mb-6">
+        <div className="mb-6 text-center">
           <h1 className="text-2xl font-bold leading-tight mb-2">
             {personalInfo.fullName || "Your Name"}
           </h1>
