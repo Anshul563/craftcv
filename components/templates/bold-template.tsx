@@ -8,19 +8,30 @@ export function BoldTemplate({ data }: { data: ResumeContent }) {
       className="w-full h-full bg-white text-gray-900 p-10 font-sans border-rose-600"
       style={{ fontFamily: "Impact, sans-serif", borderLeftWidth: "20px" }}
     >
-      <header className="mb-12">
-        <h1
-          className="text-6xl font-black uppercase text-gray-900 tracking-tighter mb-2"
-          style={{ fontFamily: "Impact, sans-serif" }}
-        >
-          {personalInfo.fullName || "Your Name"}
-        </h1>
-        <div className="bg-rose-600 text-white inline-block px-4 py-1 text-xl font-bold uppercase tracking-widest transform -skew-x-12">
-          {(personalInfo as any).jobTitle || "ROLE TITLE"}
-        </div>
+      <header className="mb-12 flex items-start gap-8">
+        {personalInfo.photo && (
+          <div className="shrink-0 bg-gray-900 p-1 transform -rotate-2 shadow-xl">
+            <img
+              src={personalInfo.photo}
+              alt={personalInfo.fullName}
+              className="w-32 h-32 object-cover grayscale"
+            />
+          </div>
+        )}
+        <div className="flex-1">
+          <h1
+            className="text-6xl font-black uppercase text-gray-900 tracking-tighter mb-2"
+            style={{ fontFamily: "Impact, sans-serif" }}
+          >
+            {personalInfo.fullName || "Your Name"}
+          </h1>
+          <div className="bg-rose-600 text-white inline-block px-4 py-1 text-xl font-bold uppercase tracking-widest transform -skew-x-12">
+            {(personalInfo as any).jobTitle || "ROLE TITLE"}
+          </div>
 
-        <div className="mt-6 flex gap-6 text-sm font-bold text-gray-500 uppercase tracking-tight">
-          {personalInfo.email} / {personalInfo.phone}
+          <div className="mt-6 flex gap-6 text-sm font-bold text-gray-500 uppercase tracking-tight">
+            {personalInfo.email} / {personalInfo.phone}
+          </div>
         </div>
       </header>
 

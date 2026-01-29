@@ -8,8 +8,17 @@ export function AcademicTemplate({ data }: { data: ResumeContent }) {
       className="w-full h-full bg-white text-black p-12 font-serif text-sm leading-normal"
       style={{ fontFamily: "Times New Roman, serif" }}
     >
-      <header className="text-center mb-8 border-b-2 border-black pb-4">
-        <h1 className="text-3xl font-bold uppercase mb-2">
+      <header className="text-center mb-8 border-b-2 border-black pb-4 relative min-h-[140px]">
+        {personalInfo.photo && (
+          <div className="absolute top-0 right-0 hidden md:block">
+            <img
+              src={personalInfo.photo}
+              alt={personalInfo.fullName}
+              className="w-24 h-32 object-cover border border-gray-300 p-1 bg-white"
+            />
+          </div>
+        )}
+        <h1 className="text-3xl font-bold uppercase mb-2 pt-4">
           {personalInfo.fullName || "Your Name"}
         </h1>
         <div className="flex justify-center flex-wrap gap-4 text-sm mt-2">

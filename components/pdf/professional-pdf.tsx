@@ -5,10 +5,12 @@ import {
   View,
   StyleSheet,
   Font,
+  Image,
 } from "@react-pdf/renderer";
 import { ResumeContent } from "@/lib/types";
 
 const styles = StyleSheet.create({
+  // ... existing styles ...
   page: {
     flexDirection: "row",
     backgroundColor: "#f8f9fa",
@@ -25,9 +27,29 @@ const styles = StyleSheet.create({
   rightPlugin: { width: "65%", padding: 20 },
 
   // Left Sidebar Styles
-  name: { fontSize: 22, fontWeight: "bold", marginBottom: 5 },
-  jobTitle: { fontSize: 12, color: "#cbd5e0", marginBottom: 20 },
+  profileImage: {
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+    marginBottom: 15,
+    alignSelf: "center",
+    objectFit: "cover",
+  },
+  name: {
+    fontSize: 22,
+    fontWeight: "bold",
+    marginBottom: 5,
+    textAlign: "center",
+  },
+  jobTitle: {
+    fontSize: 12,
+    color: "#cbd5e0",
+    marginBottom: 20,
+    textAlign: "center",
+  },
   sidebarSection: { marginBottom: 20 },
+  // ...
+  // ...
   sidebarTitle: {
     fontSize: 12,
     fontWeight: "bold",
@@ -87,6 +109,9 @@ export const ProfessionalPDF = ({
         {/* Left Sidebar */}
         <View style={styles.leftPlugin}>
           <View style={{ marginBottom: 20 }}>
+            {personalInfo.photo && (
+              <Image src={personalInfo.photo} style={styles.profileImage} />
+            )}
             <Text style={styles.name}>{personalInfo.fullName}</Text>
             <Text style={styles.jobTitle}>
               {(personalInfo as any).jobTitle}

@@ -9,6 +9,15 @@ export function ElegantTemplate({ data }: { data: ResumeContent }) {
       style={{ fontFamily: "Georgia, serif" }}
     >
       <header className="mb-10 border-b border-[#d6d3d1] pb-10">
+        {personalInfo.photo && (
+          <div className="flex justify-center mb-6">
+            <img
+              src={personalInfo.photo}
+              alt={personalInfo.fullName}
+              className="w-24 h-24 rounded-full object-cover border-4 border-white shadow-md grayscale-[0.2]"
+            />
+          </div>
+        )}
         <h1 className="text-5xl font-normal mb-4 tracking-tight text-[#0c4a6e]">
           {personalInfo.fullName || "Your Name"}
         </h1>

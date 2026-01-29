@@ -5,6 +5,7 @@ import {
   View,
   StyleSheet,
   Font,
+  Image,
 } from "@react-pdf/renderer";
 import { ResumeContent } from "@/lib/types";
 
@@ -24,6 +25,18 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: "#404040",
     paddingBottom: 10,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "flex-start",
+  },
+  profileImage: {
+    width: 60,
+    height: 60,
+    objectFit: "cover",
+    borderWidth: 1,
+    borderColor: "#404040",
+    padding: 2,
+    backgroundColor: "#252526",
   },
 
   // Syntax Highlight Colors
@@ -89,17 +102,22 @@ export const TechnicalPDF = ({
         )}
 
         <View style={styles.header}>
-          <Text style={styles.nameLine}>
-            <Text style={styles.keyword}>const</Text> Developer ={" "}
-            <Text style={styles.string}>"{personalInfo.fullName}"</Text>;
-          </Text>
-          <Text style={styles.jobLine}>
-            // {(personalInfo as any).jobTitle}
-          </Text>
-          <View style={styles.contactLine}>
-            {personalInfo.email && <Text>email: "{personalInfo.email}"</Text>}
-            {personalInfo.phone && <Text>phone: "{personalInfo.phone}"</Text>}
+          <View>
+            <Text style={styles.nameLine}>
+              <Text style={styles.keyword}>const</Text> Developer ={" "}
+              <Text style={styles.string}>"{personalInfo.fullName}"</Text>;
+            </Text>
+            <Text style={styles.jobLine}>
+              // {(personalInfo as any).jobTitle}
+            </Text>
+            <View style={styles.contactLine}>
+              {personalInfo.email && <Text>email: "{personalInfo.email}"</Text>}
+              {personalInfo.phone && <Text>phone: "{personalInfo.phone}"</Text>}
+            </View>
           </View>
+          {personalInfo.photo && (
+            <Image src={personalInfo.photo} style={styles.profileImage} />
+          )}
         </View>
 
         <View style={styles.grid}>

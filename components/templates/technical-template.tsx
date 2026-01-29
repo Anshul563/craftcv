@@ -8,20 +8,31 @@ export function TechnicalTemplate({ data }: { data: ResumeContent }) {
       className="w-full h-full bg-[#1e1e1e] text-[#d4d4d4] p-8 font-mono text-sm leading-6"
       style={{ fontFamily: "Courier Prime, monospace" }}
     >
-      <header className="border-b border-[#404040] pb-6 mb-6">
-        <h1 className="text-2xl text-[#569cd6] mb-2">
-          <span className="text-[#c586c0]">const</span> Developer ={" "}
-          <span className="text-[#ce9178]">{`"${personalInfo.fullName}"`}</span>
-          ;
-        </h1>
-        <p className="text-[#6a9955] text-xs">
-          // {(personalInfo as any).jobTitle || "Full Stack Engineer"}
-        </p>
+      <header className="border-b border-[#404040] pb-6 mb-6 flex justify-between items-start">
+        <div>
+          <h1 className="text-2xl text-[#569cd6] mb-2">
+            <span className="text-[#c586c0]">const</span> Developer ={" "}
+            <span className="text-[#ce9178]">{`"${personalInfo.fullName}"`}</span>
+            ;
+          </h1>
+          <p className="text-[#6a9955] text-xs">
+            // {(personalInfo as any).jobTitle || "Full Stack Engineer"}
+          </p>
 
-        <div className="mt-4 text-xs text-[#9cdcfe] flex flex-wrap gap-4">
-          {personalInfo.email && <span>email: "{personalInfo.email}"</span>}
-          {personalInfo.phone && <span>phone: "{personalInfo.phone}"</span>}
+          <div className="mt-4 text-xs text-[#9cdcfe] flex flex-wrap gap-4">
+            {personalInfo.email && <span>email: "{personalInfo.email}"</span>}
+            {personalInfo.phone && <span>phone: "{personalInfo.phone}"</span>}
+          </div>
         </div>
+        {personalInfo.photo && (
+          <div className="border border-[#404040] p-1 bg-[#252526]">
+            <img
+              src={personalInfo.photo}
+              alt="profile"
+              className="w-24 h-24 object-cover grayscale opacity-90"
+            />
+          </div>
+        )}
       </header>
 
       <div className="grid grid-cols-12 gap-8">

@@ -6,13 +6,22 @@ export function CreativeTemplate({ data }: { data: ResumeContent }) {
   return (
     <div className="w-full h-full bg-white text-gray-800 p-8 font-sans border-t-8 border-pink-500">
       <header className="flex justify-between items-end mb-10">
-        <div>
-          <h1 className="text-4xl font-black text-pink-600 mb-2 lowercase tracking-tighter">
-            {personalInfo.fullName || "Your Name"}
-          </h1>
-          <p className="text-xl text-gray-600 font-medium">
-            {(personalInfo as any).jobTitle || "Creative Developer"}
-          </p>
+        <div className="flex items-center gap-6">
+          {personalInfo.photo && (
+            <img
+              src={personalInfo.photo}
+              alt={personalInfo.fullName}
+              className="w-24 h-24 rounded-lg object-cover border-4 border-pink-100 shadow-sm"
+            />
+          )}
+          <div>
+            <h1 className="text-4xl font-black text-pink-600 mb-2 lowercase tracking-tighter">
+              {personalInfo.fullName || "Your Name"}
+            </h1>
+            <p className="text-xl text-gray-600 font-medium">
+              {(personalInfo as any).jobTitle || "Creative Developer"}
+            </p>
+          </div>
         </div>
         <div className="text-right text-xs font-bold text-gray-400">
           {personalInfo.email && (

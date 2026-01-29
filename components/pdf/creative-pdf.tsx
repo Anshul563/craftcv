@@ -5,6 +5,7 @@ import {
   View,
   StyleSheet,
   Font,
+  Image,
 } from "@react-pdf/renderer";
 import { ResumeContent } from "@/lib/types";
 
@@ -22,6 +23,17 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "flex-end",
     marginBottom: 30,
+  },
+  headerLeft: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 15,
+  },
+  profileImage: {
+    width: 60,
+    height: 60,
+    borderRadius: 10,
+    objectFit: "cover",
   },
   name: {
     fontSize: 24,
@@ -113,11 +125,16 @@ export const CreativePDF = ({
         )}
 
         <View style={styles.header}>
-          <View>
-            <Text style={styles.name}>{personalInfo.fullName}</Text>
-            <Text style={styles.jobTitle}>
-              {(personalInfo as any).jobTitle}
-            </Text>
+          <View style={styles.headerLeft}>
+            {personalInfo.photo && (
+              <Image src={personalInfo.photo} style={styles.profileImage} />
+            )}
+            <View>
+              <Text style={styles.name}>{personalInfo.fullName}</Text>
+              <Text style={styles.jobTitle}>
+                {(personalInfo as any).jobTitle}
+              </Text>
+            </View>
           </View>
           <View style={styles.contact}>
             <Text>{personalInfo.email}</Text>

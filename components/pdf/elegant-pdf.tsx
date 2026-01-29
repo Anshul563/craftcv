@@ -5,6 +5,7 @@ import {
   View,
   StyleSheet,
   Font,
+  Image,
 } from "@react-pdf/renderer";
 import { ResumeContent } from "@/lib/types";
 
@@ -23,6 +24,14 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0.5,
     borderBottomColor: "#d6d3d1",
     paddingBottom: 20,
+  },
+  profileImage: {
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+    alignSelf: "center",
+    marginBottom: 15,
+    objectFit: "cover",
   },
   name: { fontSize: 32, color: "#0c4a6e", marginBottom: 5 },
   jobTitle: {
@@ -108,6 +117,9 @@ export const ElegantPDF = ({
         )}
 
         <View style={styles.header}>
+          {personalInfo.photo && (
+            <Image src={personalInfo.photo} style={styles.profileImage} />
+          )}
           <Text style={styles.name}>{personalInfo.fullName}</Text>
           <Text style={styles.jobTitle}>{(personalInfo as any).jobTitle}</Text>
           <View style={styles.contact}>

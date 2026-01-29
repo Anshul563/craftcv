@@ -5,6 +5,7 @@ import {
   View,
   StyleSheet,
   Font,
+  Image,
 } from "@react-pdf/renderer";
 import { ResumeContent } from "@/lib/types";
 
@@ -21,7 +22,18 @@ const styles = StyleSheet.create({
     borderLeftColor: "#e11d48",
     paddingLeft: 25,
   },
-  header: { marginBottom: 30 },
+  header: { marginBottom: 30, flexDirection: "row", gap: 20 },
+  headerContent: { flex: 1 },
+  profileImageContainer: {
+    backgroundColor: "black",
+    padding: 2,
+    transform: "rotate(-2deg)",
+  },
+  profileImage: {
+    width: 80,
+    height: 80,
+    objectFit: "cover",
+  },
   name: { fontSize: 40, textTransform: "uppercase", marginBottom: 5 },
   jobBox: {
     backgroundColor: "#e11d48",
@@ -112,16 +124,23 @@ export const BoldPDF = ({
         )}
 
         <View style={styles.header}>
-          <Text style={styles.name}>{personalInfo.fullName}</Text>
-          <View style={styles.jobBox}>
-            <Text style={styles.jobTitle}>
-              {(personalInfo as any).jobTitle}
-            </Text>
-          </View>
-          <View style={styles.contact}>
-            <Text>{personalInfo.email}</Text>
-            <Text>/</Text>
-            <Text>{personalInfo.phone}</Text>
+          {personalInfo.photo && (
+            <View style={styles.profileImageContainer}>
+              <Image src={personalInfo.photo} style={styles.profileImage} />
+            </View>
+          )}
+          <View style={styles.headerContent}>
+            <Text style={styles.name}>{personalInfo.fullName}</Text>
+            <View style={styles.jobBox}>
+              <Text style={styles.jobTitle}>
+                {(personalInfo as any).jobTitle}
+              </Text>
+            </View>
+            <View style={styles.contact}>
+              <Text>{personalInfo.email}</Text>
+              <Text>/</Text>
+              <Text>{personalInfo.phone}</Text>
+            </View>
           </View>
         </View>
 

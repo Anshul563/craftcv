@@ -5,6 +5,7 @@ import {
   View,
   StyleSheet,
   Font,
+  Image,
 } from "@react-pdf/renderer";
 import { ResumeContent } from "@/lib/types";
 
@@ -23,6 +24,18 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: "black",
     paddingBottom: 10,
+    position: "relative",
+  },
+  profileImage: {
+    width: 60,
+    height: 80,
+    objectFit: "cover",
+    position: "absolute",
+    right: 0,
+    top: 0,
+    borderWidth: 1,
+    borderColor: "#ccc",
+    padding: 1,
   },
   name: {
     fontSize: 24,
@@ -90,6 +103,9 @@ export const AcademicPDF = ({
         )}
 
         <View style={styles.header}>
+          {personalInfo.photo && (
+            <Image src={personalInfo.photo} style={styles.profileImage} />
+          )}
           <Text style={styles.name}>{personalInfo.fullName}</Text>
           <View style={styles.contact}>
             <Text>{personalInfo.address}</Text>
