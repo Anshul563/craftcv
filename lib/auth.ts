@@ -1,18 +1,36 @@
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
-import { db } from "@/db"; // Importing your database connection
+import { db } from "@/db";
+import * as schema from "@/db/schema"; 
 
 export const auth = betterAuth({
   database: drizzleAdapter(db, {
-    provider: "pg", 
+    provider: "pg",
+   schema: {
+      // 1. Spread original schema
+      ...schema,
+      // 2. Explicitly map plural exports to singular keys expected by Better Auth
+      user: schema.users,
+      session: schema.sessions,
+      account: schema.accounts,
+      verification: schema.verifications,
+    }, 
   }),
-  emailAndPassword: {  
+  emailAndPassword: {
     enabled: true,
   },
-  socialProviders: { 
-    google: { 
-      clientId: process.env.GOOGLE_CLIENT_ID!, 
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET!, 
-    }, 
+  socialProviders: {
+    google: {
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+    },
+  },
+  user: {
+    additionalFields: {
+      plan: {
+        type: "string",
+        defaultValue: "free",
+      },
+    },
   },
 });

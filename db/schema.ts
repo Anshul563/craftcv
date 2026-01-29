@@ -21,8 +21,11 @@ export const sessions = pgTable("session", {
   id: text("id").primaryKey(),
   expiresAt: timestamp("expiresAt").notNull(),
   ipAddress: text("ipAddress"),
+  token: text("token").notNull(),
   userAgent: text("userAgent"),
   userId: text("userId").notNull().references(() => users.id),
+  createdAt: timestamp("createdAt").notNull(),
+  updatedAt: timestamp("updatedAt").notNull(),
 });
 
 export const accounts = pgTable("account", {
@@ -30,11 +33,15 @@ export const accounts = pgTable("account", {
   accountId: text("accountId").notNull(),
   providerId: text("providerId").notNull(),
   userId: text("userId").notNull().references(() => users.id),
+  scope: text("scope"),
+  accessTokenExpiresAt: timestamp("accessTokenExpiresAt"),
   accessToken: text("accessToken"),
   refreshToken: text("refreshToken"),
   idToken: text("idToken"),
   expiresAt: timestamp("expiresAt"),
   password: text("password"),
+  createdAt: timestamp("createdAt").notNull(),
+  updatedAt: timestamp("updatedAt").notNull(),
 });
 
 export const verifications = pgTable("verification", {
@@ -42,6 +49,8 @@ export const verifications = pgTable("verification", {
   identifier: text("identifier").notNull(),
   value: text("value").notNull(),
   expiresAt: timestamp("expiresAt").notNull(),
+  createdAt: timestamp("createdAt").notNull(),
+  updatedAt: timestamp("updatedAt").notNull(),
 });
 
 // =========================================
