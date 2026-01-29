@@ -11,6 +11,15 @@ export function MinimalTemplate({ data }: { data: ResumeContent }) {
     >
       {/* Centered Header */}
       <header className="text-center mb-8">
+        {personalInfo.photo && (
+          <div className="flex justify-center mb-4">
+            <img
+              src={personalInfo.photo}
+              alt={personalInfo.fullName}
+              className="w-24 h-24 rounded-full object-cover border-4 border-gray-50 shadow-sm"
+            />
+          </div>
+        )}
         <h1 className="text-4xl font-light text-gray-900 mb-2 uppercase tracking-widest">
           {personalInfo.fullName || "Your Name"}
         </h1>

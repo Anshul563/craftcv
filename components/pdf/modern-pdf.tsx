@@ -5,28 +5,33 @@ import {
   View,
   StyleSheet,
   Font,
+  Image,
 } from "@react-pdf/renderer";
 import { ResumeContent } from "@/lib/types";
 
-// Register a standard font (optional, using Helvetica by default)
-Font.register({
-  family: "Helvetica",
-  fonts: [
-    { src: "https://fonts.gstatic.com/s/roboto/v20/KFOmCnqEu92Fr1Mu4mxP.ttf" }, // Regular
-    {
-      src: "https://fonts.gstatic.com/s/roboto/v20/KFOlCnqEu92Fr1MmWUlfBBc9.ttf",
-      fontWeight: 700,
-    }, // Bold
-  ],
-});
+// ... (fonts)
 
 const styles = StyleSheet.create({
   page: { padding: 30, fontFamily: "Helvetica", fontSize: 11, lineHeight: 1.5 },
   header: {
+    flexDirection: "row",
+    alignItems: "center",
     marginBottom: 20,
     borderBottomWidth: 2,
     borderBottomColor: "#111",
     paddingBottom: 10,
+  },
+  headerLeft: {
+    marginRight: 20,
+  },
+  profileImage: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    objectFit: "cover",
+  },
+  headerRight: {
+    flex: 1,
   },
   name: { fontSize: 24, fontWeight: 700, textTransform: "uppercase" },
   jobTitle: { fontSize: 14, color: "#666", marginTop: 4 },
@@ -54,15 +59,6 @@ const styles = StyleSheet.create({
   },
   bold: { fontWeight: 700 },
   date: { color: "#666", fontSize: 10 },
-  text: { marginBottom: 4 },
-  bullet: {
-    width: 3,
-    height: 3,
-    backgroundColor: "#000",
-    borderRadius: "50%",
-    marginRight: 5,
-    marginTop: 5,
-  },
   skillBadge: {
     backgroundColor: "#eee",
     padding: "2 6",
@@ -97,12 +93,21 @@ export const ModernPDF = ({
 
         {/* Header */}
         <View style={styles.header}>
-          <Text style={styles.name}>{personalInfo.fullName}</Text>
-          <Text style={styles.jobTitle}>{(personalInfo as any).jobTitle}</Text>
-          <View style={styles.contact}>
-            {personalInfo.email && <Text>{personalInfo.email}</Text>}
-            {personalInfo.phone && <Text>• {personalInfo.phone}</Text>}
-            {personalInfo.address && <Text>• {personalInfo.address}</Text>}
+          {personalInfo.photo && (
+            <View style={styles.headerLeft}>
+              <Image src={personalInfo.photo} style={styles.profileImage} />
+            </View>
+          )}
+          <View style={styles.headerRight}>
+            <Text style={styles.name}>{personalInfo.fullName}</Text>
+            <Text style={styles.jobTitle}>
+              {(personalInfo as any).jobTitle}
+            </Text>
+            <View style={styles.contact}>
+              {personalInfo.email && <Text>{personalInfo.email}</Text>}
+              {personalInfo.phone && <Text>• {personalInfo.phone}</Text>}
+              {personalInfo.address && <Text>• {personalInfo.address}</Text>}
+            </View>
           </View>
         </View>
 

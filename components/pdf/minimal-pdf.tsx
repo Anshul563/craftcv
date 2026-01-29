@@ -5,6 +5,7 @@ import {
   View,
   StyleSheet,
   Font,
+  Image,
 } from "@react-pdf/renderer";
 import { ResumeContent } from "@/lib/types";
 
@@ -21,6 +22,14 @@ const styles = StyleSheet.create({
     color: "#333",
   },
   header: { marginBottom: 20, textAlign: "center" },
+  profileImage: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    objectFit: "cover",
+    alignSelf: "center",
+    marginBottom: 10,
+  },
   name: {
     fontSize: 28,
     fontWeight: "light",
@@ -106,6 +115,9 @@ export const MinimalPDF = ({
 
         {/* Header */}
         <View style={styles.header}>
+          {personalInfo.photo && (
+            <Image src={personalInfo.photo} style={styles.profileImage} />
+          )}
           <Text style={styles.name}>{personalInfo.fullName}</Text>
           <Text style={styles.jobTitle}>{(personalInfo as any).jobTitle}</Text>
           <View style={styles.contact}>

@@ -38,6 +38,7 @@ export interface PersonalInfo {
   summary: string;
   linkedin?: string;
   website?: string;
+  photo?: string;
 }
 
 // The Main Object stored in DB
