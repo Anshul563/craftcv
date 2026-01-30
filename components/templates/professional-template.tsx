@@ -153,7 +153,7 @@ export function ProfessionalTemplate({ data }: { data: ResumeContent }) {
                   {proj.url && (
                     <a
                       href={proj.url}
-                      className="text-xs text-blue-600 mb-1 block"
+                      className="text-xs text-brand-600 mb-1 block"
                     >
                       {proj.url}
                     </a>

@@ -26,7 +26,9 @@ export function ProjectsForm() {
 
   const updateProject = (id: string, field: keyof Project, value: any) => {
     updateResumeData({
-      projects: projects.map((p) => (p.id === id ? { ...p, [field]: value } : p)),
+      projects: projects.map((p) =>
+        p.id === id ? { ...p, [field]: value } : p,
+      ),
     });
   };
 
@@ -36,7 +38,7 @@ export function ProjectsForm() {
         <h3 className="text-lg font-semibold text-gray-900">Projects</h3>
         <button
           onClick={addProject}
-          className="flex items-center gap-1 text-sm font-medium text-blue-600 hover:text-blue-700"
+          className="flex items-center gap-1 text-sm font-medium text-brand-600 hover:text-brand-700"
         >
           <Plus className="h-4 w-4" /> Add Project
         </button>
@@ -47,8 +49,10 @@ export function ProjectsForm() {
       )}
 
       {projects?.map((project) => (
-        <div key={project.id} className="bg-gray-50 p-4 rounded-lg border border-gray-200 relative group space-y-3">
-          
+        <div
+          key={project.id}
+          className="bg-gray-50 p-4 rounded-lg border border-gray-200 relative group space-y-3"
+        >
           <button
             onClick={() => removeProject(project.id)}
             className="absolute top-2 right-2 text-gray-400 hover:text-red-500 opacity-0 group-hover:opacity-100 transition"
@@ -60,27 +64,33 @@ export function ProjectsForm() {
             <div>
               <input
                 value={project.name}
-                onChange={(e) => updateProject(project.id, "name", e.target.value)}
-                className="w-full bg-white border border-gray-300 rounded px-2 py-1.5 text-sm font-medium"
+                onChange={(e) =>
+                  updateProject(project.id, "name", e.target.value)
+                }
+                className="w-full bg-white border border-gray-300 rounded px-2 py-1.5 text-sm font-medium focus:ring-2 focus:ring-brand-500 focus:outline-none"
                 placeholder="Project Name"
               />
             </div>
-            
+
             <div className="flex items-center gap-2">
-                <LinkIcon className="h-4 w-4 text-gray-400" />
-                <input
-                    value={project.url || ""}
-                    onChange={(e) => updateProject(project.id, "url", e.target.value)}
-                    className="w-full bg-white border border-gray-300 rounded px-2 py-1 text-sm"
-                    placeholder="Project URL (optional)"
-                />
+              <LinkIcon className="h-4 w-4 text-gray-400" />
+              <input
+                value={project.url || ""}
+                onChange={(e) =>
+                  updateProject(project.id, "url", e.target.value)
+                }
+                className="w-full bg-white border border-gray-300 rounded px-2 py-1 text-sm focus:ring-2 focus:ring-brand-500 focus:outline-none"
+                placeholder="Project URL (optional)"
+              />
             </div>
 
             <div>
               <textarea
                 value={project.description}
-                onChange={(e) => updateProject(project.id, "description", e.target.value)}
-                className="w-full bg-white border border-gray-300 rounded px-2 py-1.5 text-sm h-20 resize-none"
+                onChange={(e) =>
+                  updateProject(project.id, "description", e.target.value)
+                }
+                className="w-full bg-white border border-gray-300 rounded px-2 py-1.5 text-sm h-20 resize-none focus:ring-2 focus:ring-brand-500 focus:outline-none"
                 placeholder="Brief description of the project and tech stack used..."
               />
             </div>

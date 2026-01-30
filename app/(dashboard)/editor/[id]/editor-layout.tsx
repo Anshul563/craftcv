@@ -131,7 +131,7 @@ export function EditorLayout({
           onClick={() => setActiveTab("editor")}
           className={`flex-1 py-3 flex items-center justify-center gap-2 border-b-2 transition-colors ${
             activeTab === "editor"
-              ? "text-blue-600 border-blue-600 bg-blue-50/50"
+              ? "text-brand-600 border-brand-600 bg-brand-50/50"
               : "text-gray-500 border-transparent hover:bg-gray-50"
           }`}
         >
@@ -141,7 +141,7 @@ export function EditorLayout({
           onClick={() => setActiveTab("preview")}
           className={`flex-1 py-3 flex items-center justify-center gap-2 border-b-2 transition-colors ${
             activeTab === "preview"
-              ? "text-blue-600 border-blue-600 bg-blue-50/50"
+              ? "text-brand-600 border-brand-600 bg-brand-50/50"
               : "text-gray-500 border-transparent hover:bg-gray-50"
           }`}
         >

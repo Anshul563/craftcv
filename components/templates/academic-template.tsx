@@ -79,7 +79,7 @@ export function AcademicTemplate({ data }: { data: ResumeContent }) {
               {p.url && (
                 <a
                   href={p.url}
-                  className="text-blue-800 underline inline-block mr-2 text-xs"
+                  className="text-brand-800 underline inline-block mr-2 text-xs"
                 >
                   [{p.url}]
                 </a>

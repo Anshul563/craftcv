@@ -38,7 +38,7 @@ export function ExperienceForm() {
         <h3 className="text-lg font-semibold">Experience</h3>
         <button
           onClick={addExperience}
-          className="text-blue-600 text-sm flex items-center gap-1"
+          className="text-brand-600 text-sm flex items-center gap-1 hover:text-brand-700 font-medium"
         >
           <Plus size={16} /> Add Job
         </button>
@@ -60,19 +60,19 @@ export function ExperienceForm() {
           </button>
           <input
             placeholder="Company"
-            className="w-full p-2 border rounded"
+            className="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-brand-500 focus:outline-none"
             value={exp.company}
             onChange={(e) => updateExp(exp.id, "company", e.target.value)}
           />
           <input
             placeholder="Position"
-            className="w-full p-2 border rounded"
+            className="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-brand-500 focus:outline-none"
             value={exp.position}
             onChange={(e) => updateExp(exp.id, "position", e.target.value)}
           />
           <textarea
             placeholder="Description"
-            className="w-full p-2 border rounded"
+            className="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-brand-500 focus:outline-none"
             value={exp.description}
             onChange={(e) => updateExp(exp.id, "description", e.target.value)}
           />

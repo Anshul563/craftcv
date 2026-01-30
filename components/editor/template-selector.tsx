@@ -77,7 +77,7 @@ export function TemplateSelector({ isPro }: { isPro: boolean }) {
             onClick={() => setTemplateName(t.id)}
             className={`relative flex flex-col items-center justify-center p-3 border-2 rounded-lg transition-all ${
               templateName === t.id
-                ? "border-blue-600 bg-blue-50"
+                ? "border-brand-600 bg-brand-50"
                 : "border-gray-200 hover:border-gray-300 bg-white"
             }`}
           >
@@ -99,7 +99,7 @@ export function TemplateSelector({ isPro }: { isPro: boolean }) {
               <div className="w-6 h-0.5 bg-white/50 mb-4"></div>
             </div>
             <span
-              className={`text-xs font-medium ${templateName === t.id ? "text-blue-600" : "text-gray-600"}`}
+              className={`text-xs font-medium ${templateName === t.id ? "text-brand-600" : "text-gray-600"}`}
             >
               {t.name}
             </span>

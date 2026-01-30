@@ -103,7 +103,7 @@ export function MinimalTemplate({ data }: { data: ResumeContent }) {
                   {proj.url && (
                     <a
                       href={proj.url}
-                      className="text-xs text-blue-500 mb-1 block"
+                      className="text-xs text-brand-500 mb-1 block"
                     >
                       {proj.url}
                     </a>

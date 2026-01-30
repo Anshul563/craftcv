@@ -115,7 +115,7 @@ export function PersonalInfoForm() {
             value={personalInfo.fullName || ""}
             onChange={handleChange}
             placeholder="John Doe"
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:outline-none"
           />
         </div>
         <div>
@@ -128,7 +128,7 @@ export function PersonalInfoForm() {
             value={(personalInfo as any).jobTitle || ""} // Temporary cast if type not updated
             onChange={handleChange}
             placeholder="Software Engineer"
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:outline-none"
           />
         </div>
         <div>
@@ -141,7 +141,7 @@ export function PersonalInfoForm() {
             value={personalInfo.email || ""}
             onChange={handleChange}
             placeholder="john@example.com"
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:outline-none"
           />
         </div>
         <div>
@@ -154,7 +154,7 @@ export function PersonalInfoForm() {
             value={personalInfo.phone || ""}
             onChange={handleChange}
             placeholder="+1 234 567 890"
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:outline-none"
           />
         </div>
       </div>
@@ -169,7 +169,7 @@ export function PersonalInfoForm() {
           onChange={handleChange}
           rows={4}
           placeholder="Experienced developer with a passion for..."
-          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none resize-none"
+          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:outline-none resize-none"
         />
       </div>
     </div>

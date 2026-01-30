@@ -35,7 +35,7 @@ export function SkillsForm() {
         <h3 className="text-lg font-semibold text-gray-900">Skills</h3>
         <button
           onClick={addSkill}
-          className="flex items-center gap-1 text-sm font-medium text-blue-600 hover:text-blue-700"
+          className="flex items-center gap-1 text-sm font-medium text-brand-600 hover:text-brand-700"
         >
           <Plus className="h-4 w-4" /> Add Skill
         </button>
@@ -47,15 +47,18 @@ export function SkillsForm() {
 
       <div className="flex flex-wrap gap-2">
         {skills?.map((skill) => (
-          <div key={skill.id} className="flex items-center gap-2 bg-gray-50 border border-gray-200 rounded-md p-2">
+          <div
+            key={skill.id}
+            className="flex items-center gap-2 bg-gray-50 border border-gray-200 rounded-md p-2"
+          >
             <input
               type="text"
               placeholder="Skill (e.g. React)"
               value={skill.name}
               onChange={(e) => updateSkill(skill.id, "name", e.target.value)}
-              className="bg-transparent border-b border-transparent focus:border-blue-500 focus:outline-none text-sm w-32"
+              className="bg-transparent border-b border-transparent focus:border-brand-500 focus:outline-none text-sm w-32"
             />
-            
+
             <select
               value={skill.level}
               onChange={(e) => updateSkill(skill.id, "level", e.target.value)}

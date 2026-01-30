@@ -13,19 +13,22 @@ export default function SignIn() {
 
   const handleSignIn = async () => {
     setLoading(true);
-    await authClient.signIn.email({
-      email,
-      password,
-      callbackURL: "/dashboard",
-    }, {
-      onError: (ctx) => {
-        alert(ctx.error.message);
-        setLoading(false);
+    await authClient.signIn.email(
+      {
+        email,
+        password,
+        callbackURL: "/dashboard",
       },
-      onSuccess: () => {
-        router.push("/dashboard");
-      }
-    });
+      {
+        onError: (ctx) => {
+          alert(ctx.error.message);
+          setLoading(false);
+        },
+        onSuccess: () => {
+          router.push("/dashboard");
+        },
+      },
+    );
   };
 
   const handleGoogleSignIn = async () => {
@@ -47,7 +50,11 @@ export default function SignIn() {
           onClick={handleGoogleSignIn}
           className="w-full flex items-center justify-center gap-2 bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 font-medium py-2 px-4 rounded-lg transition"
         >
-          <img src="https://www.svgrepo.com/show/475656/google-color.svg" className="h-5 w-5" alt="Google" />
+          <img
+            src="https://www.svgrepo.com/show/475656/google-color.svg"
+            className="h-5 w-5"
+            alt="Google"
+          />
           Continue with Google
         </button>
 
@@ -56,7 +63,9 @@ export default function SignIn() {
             <div className="w-full border-t border-gray-200"></div>
           </div>
           <div className="relative flex justify-center text-sm">
-            <span className="px-2 bg-white text-gray-500">Or continue with</span>
+            <span className="px-2 bg-white text-gray-500">
+              Or continue with
+            </span>
           </div>
         </div>
 
@@ -65,19 +74,19 @@ export default function SignIn() {
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:outline-none"
         />
         <input
           type="password"
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:outline-none"
         />
         <button
           onClick={handleSignIn}
           disabled={loading}
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition disabled:opacity-50"
+          className="w-full bg-brand-600 hover:bg-brand-700 text-white font-medium py-2 px-4 rounded-lg transition disabled:opacity-50"
         >
           {loading ? "Signing in..." : "Sign In"}
         </button>
@@ -85,7 +94,7 @@ export default function SignIn() {
 
       <p className="text-center text-sm text-gray-600">
         Don't have an account?{" "}
-        <Link href="/sign-up" className="text-blue-600 hover:underline">
+        <Link href="/sign-up" className="text-brand-600 hover:underline">
           Sign up
         </Link>
       </p>
