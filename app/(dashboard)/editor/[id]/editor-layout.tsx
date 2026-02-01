@@ -15,7 +15,19 @@ import { ModernTemplate } from "@/components/templates/modern-template";
 import { MinimalTemplate } from "@/components/templates/minimal-template";
 import { ProfessionalTemplate } from "@/components/templates/professional-template";
 import { useResume } from "@/context/resume-context";
-import { Download, Loader2, Save, Eye, PenLine } from "lucide-react";
+import {
+  Download,
+  Loader2,
+  Save,
+  Eye,
+  PenLine,
+  LayoutTemplate,
+  User,
+  GraduationCap,
+  Briefcase,
+  FolderGit2,
+  Wrench,
+} from "lucide-react";
 import { useState } from "react";
 
 export function EditorLayout({
@@ -174,6 +186,31 @@ export function EditorLayout({
           }`}
         >
           <div className="flex-1 overflow-y-auto custom-scrollbar p-6">
+            {/* Mobile Navigation (Horizontal Scroll) */}
+            <div className="lg:hidden mb-6 -mx-6 px-6 overflow-x-auto flex gap-3 no-scrollbar pb-2">
+              {[
+                { id: "templates", icon: LayoutTemplate, label: "Templates" },
+                { id: "personal", icon: User, label: "Personal" },
+                { id: "education", icon: GraduationCap, label: "Education" },
+                { id: "experience", icon: Briefcase, label: "Experience" },
+                { id: "projects", icon: FolderGit2, label: "Projects" },
+                { id: "skills", icon: Wrench, label: "Skills" },
+              ].map((item) => (
+                <button
+                  key={item.id}
+                  onClick={() => setActiveSection(item.id)}
+                  className={`flex items-center gap-2 px-4 py-2 rounded-full whitespace-nowrap text-sm font-medium transition-colors border ${
+                    activeSection === item.id
+                      ? "bg-gray-900 text-white border-gray-900"
+                      : "bg-white text-gray-600 border-gray-200 hover:bg-gray-50"
+                  }`}
+                >
+                  <item.icon size={14} />
+                  {item.label}
+                </button>
+              ))}
+            </div>
+
             <div className="max-w-md mx-auto animate-fade-in">
               <div className="mb-6 flex items-center justify-between">
                 <h2 className="text-xl font-bold text-gray-900 capitalize">
@@ -191,7 +228,7 @@ export function EditorLayout({
             activeTab === "preview" ? "flex" : "hidden lg:flex"
           }`}
         >
-          <div className="flex-1 overflow-y-auto p-4 lg:p-12 flex justify-center items-start">
+          <div className="flex-1 overflow-auto p-4 lg:p-12 flex justify-center items-start">
             {/* A4 Paper Container */}
             <div
               className="bg-white shadow-2xl shadow-gray-900/5 rounded-sm overflow-hidden transform-gpu transition-transform duration-500 origin-top animate-fade-in-up"

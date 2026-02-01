@@ -18,7 +18,7 @@ export async function DashboardNavbar() {
           <div className="bg-brand-600 p-1.5 rounded-lg shadow-lg shadow-brand-500/20 group-hover:scale-105 transition-transform duration-300">
             <FileText className="h-5 w-5 text-white" />
           </div>
-          <span className="text-xl font-bold tracking-tight text-gray-900 group-hover:text-brand-600 transition-colors">
+          <span className="text-xl font-bold tracking-tight text-gray-900 group-hover:text-brand-600 transition-colors hidden sm:block">
             CraftCV
           </span>
         </Link>
