@@ -1,12 +1,5 @@
 import Link from "next/link";
-import {
-  FileText,
-  CheckCircle,
-  Download,
-  Zap,
-  Star,
-  Shield,
-} from "lucide-react";
+import { FileText, Download, Zap, Star, Shield } from "lucide-react";
 
 export default function LandingPage() {
   return (
@@ -66,12 +59,6 @@ export default function LandingPage() {
             >
               Create My Resume
             </Link>
-            <Link
-              href="#pricing"
-              className="w-full sm:w-auto bg-white/80 backdrop-blur-sm border border-gray-200 hover:bg-white text-gray-700 text-lg font-semibold px-8 py-3.5 rounded-xl transition hover:shadow-lg"
-            >
-              View Pricing
-            </Link>
           </div>
         </div>
       </section>
@@ -105,75 +92,6 @@ export default function LandingPage() {
               title="Secure & Private"
               description="Your data is encrypted and secure. We never share your personal information."
             />
-          </div>
-        </div>
-      </section>
-
-      {/* --- Pricing Section --- */}
-      <section id="pricing" className="py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
-              Simple, Transparent Pricing
-            </h2>
-            <p className="text-gray-600">
-              Start for free, upgrade when you need more power.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {/* Free Plan */}
-            <div className="glass rounded-2xl p-8 hover:border-brand-300 transition-colors">
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Free</h3>
-              <div className="flex items-baseline gap-1 mb-6">
-                <span className="text-4xl font-bold text-gray-900">₹0</span>
-                <span className="text-gray-500">/forever</span>
-              </div>
-              <ul className="space-y-4 mb-8">
-                <PricingItem text="1 Resume" />
-                <PricingItem text="Basic Templates" />
-                <PricingItem text="PDF Download (Watermarked)" />
-              </ul>
-              <Link
-                href="/sign-up"
-                className="block text-center w-full bg-gray-100 hover:bg-gray-200 text-gray-900 font-medium py-3 rounded-lg transition"
-              >
-                Get Started
-              </Link>
-            </div>
-
-            {/* Pro Plan */}
-            <div className="border border-brand-500 rounded-2xl p-8 bg-brand-50/10 backdrop-blur-sm relative shadow-premium">
-              <div className="absolute top-0 right-0 bg-brand-600 text-white text-xs font-bold px-3 py-1 rounded-bl-lg rounded-tr-lg">
-                POPULAR
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Pro</h3>
-              <div className="flex items-baseline gap-1 mb-6">
-                <span className="text-4xl font-bold text-gray-900">₹999</span>
-                <span className="text-gray-500">/one-time</span>
-              </div>
-              <ul className="space-y-4 mb-8">
-                <PricingItem
-                  text="Unlimited Resumes"
-                  checkColor="text-brand-600"
-                />
-                <PricingItem
-                  text="Premium Templates"
-                  checkColor="text-brand-600"
-                />
-                <PricingItem text="No Watermark" checkColor="text-brand-600" />
-                <PricingItem
-                  text="Priority Support"
-                  checkColor="text-brand-600"
-                />
-              </ul>
-              <Link
-                href="/sign-up"
-                className="block text-center w-full bg-brand-600 hover:bg-brand-700 text-white font-medium py-3 rounded-lg transition shadow-lg shadow-brand-600/20"
-              >
-                Upgrade to Pro
-              </Link>
-            </div>
           </div>
         </div>
       </section>
@@ -214,20 +132,5 @@ function FeatureCard({
       <h3 className="text-lg font-semibold text-gray-900 mb-2">{title}</h3>
       <p className="text-gray-600 text-sm leading-relaxed">{description}</p>
     </div>
-  );
-}
-
-function PricingItem({
-  text,
-  checkColor = "text-gray-400",
-}: {
-  text: string;
-  checkColor?: string;
-}) {
-  return (
-    <li className="flex items-center gap-3">
-      <CheckCircle className={`h-5 w-5 ${checkColor}`} />
-      <span className="text-gray-600">{text}</span>
-    </li>
   );
 }
