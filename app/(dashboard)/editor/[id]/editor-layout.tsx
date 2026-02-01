@@ -27,21 +27,13 @@ export function EditorLayout({
 }) {
   const { resumeData, isSaving, templateName } = useResume();
   const [isDownloading, setIsDownloading] = useState(false);
+  // --- State for Sidebar Navigation ---
   const [activeTab, setActiveTab] = useState<"editor" | "preview">("editor");
+  const [activeSection, setActiveSection] = useState("templates");
 
   const handleDownload = async () => {
-    // Check for Paid Templates
-    const proTemplates = [
-      "creative",
-      "elegant",
-      "technical",
-      "bold",
-      "academic",
-    ];
-    if (proTemplates.includes(templateName) && !isPro) {
-      alert("This is a PRO template. Please upgrade to download.");
-      return;
-    }
+    // 1. REMOVED: Pro Template Check
+    // All templates are now free!
 
     setIsDownloading(true);
     try {
@@ -86,24 +78,58 @@ export function EditorLayout({
     }
   };
 
+  // Helper to render the active form section
+  const renderActiveSection = () => {
+    switch (activeSection) {
+      case "templates":
+        return <TemplateSelector isPro={true} />; // Always show as unlocked
+      case "personal":
+        return <PersonalInfoForm />;
+      case "education":
+        return <EducationForm />;
+      case "experience":
+        return <ExperienceForm />;
+      case "projects":
+        return <ProjectsForm />;
+      case "skills":
+        return <SkillsForm />;
+      default:
+        return <PersonalInfoForm />;
+    }
+  };
+
   return (
-    <div className="flex h-screen flex-col bg-gray-100 overflow-hidden">
+    <div className="flex h-screen flex-col bg-gray-50 overflow-hidden font-sans">
       {/* Top Bar */}
-      <header className="flex h-16 items-center justify-between border-b bg-white px-4 lg:px-6 shadow-sm z-10 shrink-0">
-        <h1 className="text-lg font-bold text-gray-800 truncate">
-          Resume Editor
-        </h1>
+      <header className="flex h-16 items-center justify-between border-b border-gray-200/60 bg-white/80 backdrop-blur-xl px-4 lg:px-6 shadow-sm z-30 shrink-0">
+        <div className="flex items-center gap-3">
+          <Link
+            href="/dashboard"
+            className="p-2 -ml-2 text-gray-400 hover:text-gray-900 transition-colors"
+          >
+            <ChevronLeft size={20} />
+          </Link>
+          <div>
+            <h1 className="text-sm font-bold text-gray-900 truncate flex items-center gap-2">
+              Resume Editor
+              <span className="hidden sm:inline-flex px-2 py-0.5 rounded-full bg-gray-100 text-gray-500 text-[10px] uppercase tracking-wider font-semibold">
+                Draft
+              </span>
+            </h1>
+          </div>
+        </div>
 
         <div className="flex items-center gap-2 lg:gap-4">
           {/* Save Status Indicator */}
-          <div className="hidden sm:flex items-center gap-2 text-sm text-gray-500">
+          <div className="hidden sm:flex items-center gap-2 text-xs font-medium text-gray-400 bg-gray-50 px-3 py-1.5 rounded-full border border-gray-100">
             {isSaving ? (
               <>
-                <Loader2 className="h-4 w-4 animate-spin" /> Saving...
+                <Loader2 className="h-3 w-3 animate-spin text-brand-500" />{" "}
+                <span className="text-brand-600">Saving...</span>
               </>
             ) : (
               <>
-                <Save className="h-4 w-4" /> Saved
+                <Save className="h-3 w-3" /> Saved
               </>
             )}
           </div>
@@ -112,12 +138,12 @@ export function EditorLayout({
           <button
             onClick={handleDownload}
             disabled={isDownloading || isSaving}
-            className="flex items-center gap-2 bg-gray-900 text-white px-3 py-2 rounded-lg text-xs lg:text-sm font-medium hover:bg-gray-800 disabled:opacity-50 transition"
+            className="group flex items-center gap-2 bg-gray-900 hover:bg-gray-800 text-white px-4 py-2 rounded-xl text-sm font-medium shadow-lg shadow-gray-900/10 disabled:opacity-50 transition-all hover:scale-105 active:scale-95"
           >
             {isDownloading ? (
               <Loader2 className="h-4 w-4 animate-spin" />
             ) : (
-              <Download className="h-4 w-4" />
+              <Download className="h-4 w-4 group-hover:-translate-y-0.5 transition-transform" />
             )}
             <span className="hidden sm:inline">Download PDF</span>
             <span className="sm:hidden">PDF</span>
@@ -125,66 +151,89 @@ export function EditorLayout({
         </div>
       </header>
 
-      {/* Mobile Tab Bar */}
-      <div className="flex lg:hidden border-b bg-white text-sm font-medium shrink-0">
-        <button
-          onClick={() => setActiveTab("editor")}
-          className={`flex-1 py-3 flex items-center justify-center gap-2 border-b-2 transition-colors ${
-            activeTab === "editor"
-              ? "text-brand-600 border-brand-600 bg-brand-50/50"
-              : "text-gray-500 border-transparent hover:bg-gray-50"
-          }`}
-        >
-          <PenLine size={16} /> Editor
-        </button>
-        <button
-          onClick={() => setActiveTab("preview")}
-          className={`flex-1 py-3 flex items-center justify-center gap-2 border-b-2 transition-colors ${
-            activeTab === "preview"
-              ? "text-brand-600 border-brand-600 bg-brand-50/50"
-              : "text-gray-500 border-transparent hover:bg-gray-50"
-          }`}
-        >
-          <Eye size={16} /> Preview
-        </button>
-      </div>
-
       {/* Main Content Area */}
       <div className="flex flex-1 overflow-hidden relative">
-        {/* LEFT: Form Panel */}
-        <div
-          className={`w-full lg:w-1/2 overflow-y-auto border-r bg-white p-4 lg:p-8 ${
-            activeTab === "editor" ? "block" : "hidden lg:block"
-          }`}
-        >
-          <TemplateSelector isPro={isPro} />
-          <hr className="my-6 border-gray-100" />
-          <PersonalInfoForm />
-          <EducationForm />
-          <ExperienceForm />
-          <ProjectsForm />
-          <SkillsForm />
+        {/* SIDEBAR (Desktop) */}
+        <div className="hidden lg:block relative z-20">
+          <EditorSidebar
+            activeSection={activeSection}
+            setActiveSection={setActiveSection}
+          />
         </div>
 
-        {/* RIGHT: Preview Panel */}
+        {/* EDITOR PANEL (Left/Center) */}
         <div
-          className={`w-full lg:w-1/2 overflow-y-auto bg-gray-100 p-4 lg:p-8 justify-center ${
+          className={`w-full lg:w-[450px] xl:w-[500px] flex flex-col bg-white border-r border-gray-200/60 shadow-[4px_0_24px_-12px_rgba(0,0,0,0.05)] z-10 transition-transform duration-300 absolute lg:relative h-full ${
+            activeTab === "editor"
+              ? "translate-x-0"
+              : "-translate-x-full lg:translate-x-0"
+          }`}
+        >
+          <div className="flex-1 overflow-y-auto custom-scrollbar p-6">
+            <div className="max-w-md mx-auto animate-fade-in">
+              <div className="mb-6 flex items-center justify-between">
+                <h2 className="text-xl font-bold text-gray-900 capitalize">
+                  {activeSection}
+                </h2>
+              </div>
+              {renderActiveSection()}
+            </div>
+          </div>
+        </div>
+
+        {/* PREVIEW PANEL (Right) */}
+        <div
+          className={`w-full flex-1 overflow-hidden bg-gray-50/50 relative flex flex-col ${
             activeTab === "preview" ? "flex" : "hidden lg:flex"
           }`}
         >
-          {/* A4 Paper Container */}
-          <div
-            className="w-[210mm] min-h-[297mm] bg-white shadow-xl rounded-sm overflow-hidden transform scale-[0.45] sm:scale-[0.6] md:scale-[0.75] lg:scale-90 origin-top relative"
-            style={{
-              // Ensure it keeps A4 aspect ratio look
-              aspectRatio: "210/297",
-            }}
-          >
-            {renderTemplate()}
-            <Watermark />
+          <div className="flex-1 overflow-y-auto p-4 lg:p-12 flex justify-center items-start">
+            {/* A4 Paper Container */}
+            <div
+              className="bg-white shadow-2xl shadow-gray-900/5 rounded-sm overflow-hidden transform-gpu transition-transform duration-500 origin-top animate-fade-in-up"
+              style={{
+                width: "210mm",
+                minHeight: "297mm",
+                transform: "scale(0.85)", // Default scale
+              }}
+            >
+              {renderTemplate()}
+              {/* Watermark removed or kept based on preference, assuming removed per 'Free' request */}
+              {/* <Watermark /> */}
+            </div>
           </div>
+        </div>
+
+        {/* Mobile Tab Bar */}
+        <div className="lg:hidden absolute bottom-6 left-1/2 -translate-x-1/2 bg-white/90 backdrop-blur-md border border-gray-200/50 shadow-2xl rounded-full p-1.5 flex gap-1 z-50">
+          <button
+            onClick={() => setActiveTab("editor")}
+            className={`px-6 py-2.5 rounded-full text-sm font-medium transition-all ${
+              activeTab === "editor"
+                ? "bg-gray-900 text-white shadow-md"
+                : "text-gray-500 hover:bg-gray-100"
+            }`}
+          >
+            Edit
+          </button>
+          <button
+            onClick={() => setActiveTab("preview")}
+            className={`px-6 py-2.5 rounded-full text-sm font-medium transition-all ${
+              activeTab === "preview"
+                ? "bg-gray-900 text-white shadow-md"
+                : "text-gray-500 hover:bg-gray-100"
+            }`}
+          >
+            Preview
+          </button>
         </div>
       </div>
     </div>
   );
 }
+
+// Imports
+import { EditorSidebar } from "@/components/ui/editor-sidebar";
+import Link from "next/link";
+import { ChevronLeft } from "lucide-react";
+import { cn } from "@/lib/utils";
