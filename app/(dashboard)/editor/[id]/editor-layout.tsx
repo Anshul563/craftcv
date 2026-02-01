@@ -25,7 +25,8 @@ export function EditorLayout({
   resumeId: number;
   isPro: boolean;
 }) {
-  const { resumeData, isSaving, templateName } = useResume();
+  const { resumeData, isSaving, templateName, resumeTitle, setResumeTitle } =
+    useResume();
   const [isDownloading, setIsDownloading] = useState(false);
   // --- State for Sidebar Navigation ---
   const [activeTab, setActiveTab] = useState<"editor" | "preview">("editor");
@@ -102,20 +103,23 @@ export function EditorLayout({
     <div className="flex h-screen flex-col bg-gray-50 overflow-hidden font-sans">
       {/* Top Bar */}
       <header className="flex h-16 items-center justify-between border-b border-gray-200/60 bg-white/80 backdrop-blur-xl px-4 lg:px-6 shadow-sm z-30 shrink-0">
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 w-1/2">
           <Link
             href="/dashboard"
             className="p-2 -ml-2 text-gray-400 hover:text-gray-900 transition-colors"
           >
             <ChevronLeft size={20} />
           </Link>
-          <div>
-            <h1 className="text-sm font-bold text-gray-900 truncate flex items-center gap-2">
-              Resume Editor
-              <span className="hidden sm:inline-flex px-2 py-0.5 rounded-full bg-gray-100 text-gray-500 text-[10px] uppercase tracking-wider font-semibold">
-                Draft
-              </span>
-            </h1>
+          <div className="flex items-center gap-2">
+            <input
+              value={resumeTitle}
+              onChange={(e) => setResumeTitle(e.target.value)}
+              className="text-sm font-bold text-gray-900 bg-transparent border-none focus:ring-0 focus:outline-none placeholder:text-gray-400 w-full min-w-[200px]"
+              placeholder="Untitled Resume"
+            />
+            <span className="hidden sm:inline-flex px-2 py-0.5 rounded-full bg-gray-100 text-gray-500 text-[10px] uppercase tracking-wider font-semibold whitespace-nowrap">
+              Draft
+            </span>
           </div>
         </div>
 

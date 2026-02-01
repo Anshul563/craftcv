@@ -13,14 +13,15 @@ export async function PATCH(
   if (!session) return new Response("Unauthorized", { status: 401 });
 
   const body = await req.json();
-  const { content } = body;
+  const { content, title } = body;
+
+  const updateData: any = { updatedAt: new Date() };
+  if (content) updateData.content = content;
+  if (title) updateData.title = title;
 
   await db
     .update(resumes)
-    .set({
-      content,
-      updatedAt: new Date(),
-    })
+    .set(updateData)
     .where(
       and(
         eq(resumes.id, Number(id)),

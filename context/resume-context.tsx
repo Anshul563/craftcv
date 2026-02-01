@@ -16,6 +16,8 @@ interface ResumeContextType {
   isSaving: boolean;
   templateName: string;
   setTemplateName: (name: string) => void;
+  resumeTitle: string;
+  setResumeTitle: (title: string) => void;
 }
 
 const ResumeContext = createContext<ResumeContextType | undefined>(undefined);
@@ -25,11 +27,13 @@ export function ResumeProvider({
   initialData,
   resumeId,
   initialTemplate,
+  initialTitle,
 }: {
   children: React.ReactNode;
   initialData: ResumeContent;
   resumeId: number;
   initialTemplate?: string;
+  initialTitle?: string;
 }) {
   const [resumeData, setResumeData] = useState<ResumeContent>({
     ...initialResumeState,
@@ -39,6 +43,9 @@ export function ResumeProvider({
       ...(initialData?.personalInfo || {}),
     },
   });
+  const [resumeTitle, setResumeTitle] = useState(
+    initialTitle || "Untitled Resume",
+  );
   const [templateName, setTemplateName] = useState(initialTemplate || "modern");
   const [isSaving, setIsSaving] = useState(false);
 
@@ -50,7 +57,11 @@ export function ResumeProvider({
       try {
         await fetch(`/api/resume/${resumeId}`, {
           method: "PATCH",
-          body: JSON.stringify({ content: resumeData, template: templateName }),
+          body: JSON.stringify({
+            content: resumeData,
+            template: templateName,
+            title: resumeTitle,
+          }),
         });
       } catch (error) {
         console.error("Failed to save", error);
@@ -61,7 +72,7 @@ export function ResumeProvider({
 
     const timeout = setTimeout(saveToDb, 1000); // 1 second debounce
     return () => clearTimeout(timeout);
-  }, [resumeData, templateName, resumeId]);
+  }, [resumeData, templateName, resumeTitle, resumeId]);
 
   const updateResumeData = useCallback((newData: Partial<ResumeContent>) => {
     setResumeData((prev) => ({ ...prev, ...newData }));
@@ -75,6 +86,8 @@ export function ResumeProvider({
         isSaving,
         templateName,
         setTemplateName,
+        resumeTitle,
+        setResumeTitle,
       }}
     >
       {children}

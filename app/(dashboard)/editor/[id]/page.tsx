@@ -38,6 +38,7 @@ export default async function EditorPage({
       initialData={resume.content as any}
       resumeId={resume.id}
       initialTemplate={resume.template}
+      initialTitle={resume.title}
     >
       <EditorLayout resumeId={resume.id} isPro={user.plan === "pro"} />
     </ResumeProvider>
