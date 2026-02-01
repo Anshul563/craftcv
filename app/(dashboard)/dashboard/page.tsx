@@ -31,7 +31,7 @@ export default async function Dashboard() {
       {/* Header Section */}
       <div className="mb-12">
         <h1 className="text-4xl font-extrabold text-transparent bg-clip-text bg-linear-to-r from-gray-900 to-gray-600 mb-2">
-          Welcome back, {session.user.name.split(" ")[0]} 👋
+          Welcome back, {session.user.name.split(" ")[0]}
         </h1>
         <p className="text-lg text-gray-600 max-w-2xl">
           Ready to land your dream job? Manage your CVs and create new ones
