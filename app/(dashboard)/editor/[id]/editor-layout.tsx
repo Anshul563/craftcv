@@ -234,7 +234,7 @@ export function EditorLayout({
               style={{
                 width: "210mm",
                 minHeight: "297mm",
-                transform: "scale(0.85)", // Default scale
+                transform: "scale(0.85)", 
               }}
             >
               {renderTemplate()}
