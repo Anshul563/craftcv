@@ -238,8 +238,7 @@ export function EditorLayout({
               }}
             >
               {renderTemplate()}
-              {/* Watermark removed or kept based on preference, assuming removed per 'Free' request */}
-              {/* <Watermark /> */}
+              
             </div>
           </div>
         </div>
