@@ -45,8 +45,7 @@ export function EditorLayout({
   const [activeSection, setActiveSection] = useState("templates");
 
   const handleDownload = async () => {
-    // 1. REMOVED: Pro Template Check
-    // All templates are now free!
+   
 
     setIsDownloading(true);
     try {
