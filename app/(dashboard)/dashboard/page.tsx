@@ -22,8 +22,7 @@ export default async function Dashboard() {
     .where(eq(resumes.userId, session.user.id))
     .orderBy(desc(resumes.updatedAt));
 
-  // const isPro = session.user.plan === "pro";
-  // If free, they can only create if they have 0 resumes
+  
   const canCreate = true; 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
