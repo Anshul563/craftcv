@@ -29,7 +29,8 @@ export async function GET(
   const [user] = await db.select().from(users).where(eq(users.id, userId));
 
   // 2. Determine Watermark Status
-  let isFreePlan = user.plan === "free";
+  // Force remove ads/watermark
+  let isFreePlan = false;
 
   // 3. Render PDF Stream
   const stream = await ReactPDF.renderToStream(

@@ -18,13 +18,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        {children}
-        <Script
-          src="https://pl28625416.effectivegatecpm.com/6f/27/be/6f27becea790f60ceac6dcbd729e4d05.js"
-          strategy="afterInteractive"
-        />
-      </body>
+      <body className={inter.className}>{children}</body>
     </html>
   );
 }
