@@ -42,6 +42,8 @@ export function ResumeProvider({
       ...initialResumeState.personalInfo,
       ...(initialData?.personalInfo || {}),
     },
+    // Ensure sectionOrder has a default value if not present in initialData
+    sectionOrder: initialData?.sectionOrder || initialResumeState.sectionOrder,
   });
   const [resumeTitle, setResumeTitle] = useState(
     initialTitle || "Untitled Resume",

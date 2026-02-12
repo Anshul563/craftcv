@@ -48,6 +48,7 @@ export interface ResumeContent {
   experience: Experience[];
   skills: Skill[];
   projects: Project[];
+  sectionOrder: string[]; // Order of sections (e.g., ["education", "experience", "skills", "projects"])
 }
 
 // Default empty state
@@ -63,4 +64,5 @@ export const initialResumeState: ResumeContent = {
   experience: [],
   skills: [],
   projects: [],
+  sectionOrder: ["experience", "education", "skills", "projects"],
 };
