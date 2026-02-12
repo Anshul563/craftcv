@@ -96,6 +96,22 @@ export function EditorLayout({
     }
   };
 
+  const addSection = (sectionId: string) => {
+    // Add to end of sectionOrder if not already present
+    if (!resumeData.sectionOrder.includes(sectionId)) {
+      updateResumeData({
+        sectionOrder: [...resumeData.sectionOrder, sectionId],
+      });
+    }
+  };
+
+  const removeSection = (sectionId: string) => {
+    // Remove from sectionOrder
+    updateResumeData({
+      sectionOrder: resumeData.sectionOrder.filter((id) => id !== sectionId),
+    });
+  };
+
   const handleDownload = async () => {
     setIsDownloading(true);
     try {
@@ -155,28 +171,95 @@ export function EditorLayout({
         return <ProjectsForm />;
       case "skills":
         return <SkillsForm />;
+      case "languages":
+        return <LanguagesForm />;
+      case "certifications":
+        return <CertificationsForm />;
       case "layout":
         return (
-          <div className="space-y-4">
-            <p className="text-sm text-gray-500 mb-4">
-              Drag and drop to reorder sections on your resume.
-            </p>
-            <DndContext
-              sensors={sensors}
-              collisionDetection={closestCenter}
-              onDragEnd={handleDragEnd}
-            >
-              <SortableContext
-                items={resumeData.sectionOrder}
-                strategy={verticalListSortingStrategy}
+          <div className="space-y-8 animate-fade-in">
+            {/* Active Sections */}
+            <div>
+              <h3 className="text-sm font-semibold text-gray-900 mb-3 flex items-center gap-2">
+                <LayoutTemplate size={16} className="text-brand-600" />
+                Active Sections
+              </h3>
+              <p className="text-xs text-gray-500 mb-4">
+                Drag to reorder. Click trash to remove from resume.
+              </p>
+              <DndContext
+                sensors={sensors}
+                collisionDetection={closestCenter}
+                onDragEnd={handleDragEnd}
               >
-                {resumeData.sectionOrder.map((sectionId) => (
-                  <SortableSection key={sectionId} id={sectionId}>
-                    <div className="font-medium capitalize">{sectionId}</div>
-                  </SortableSection>
+                <SortableContext
+                  items={resumeData.sectionOrder}
+                  strategy={verticalListSortingStrategy}
+                >
+                  {resumeData.sectionOrder.map((sectionId) => {
+                    // Find label for this section
+                    const sectionConfig = ALL_SECTIONS.find(
+                      (s) => s.id === sectionId,
+                    );
+                    const label = sectionConfig
+                      ? sectionConfig.label
+                      : sectionId;
+                    return (
+                      <SortableSection key={sectionId} id={sectionId}>
+                        <div className="flex justify-between items-center w-full pr-2">
+                          <span className="font-medium capitalize text-gray-700">
+                            {label}
+                          </span>
+                          <button
+                            onClick={() => removeSection(sectionId)}
+                            className="p-1 hover:bg-red-50 text-gray-400 hover:text-red-500 rounded transition-colors"
+                            title="Remove section"
+                          >
+                            <Trash2 size={14} />
+                          </button>
+                        </div>
+                      </SortableSection>
+                    );
+                  })}
+                </SortableContext>
+              </DndContext>
+            </div>
+
+            {/* Available Sections */}
+            <div>
+              <h3 className="text-sm font-semibold text-gray-900 mb-3 flex items-center gap-2">
+                <Plus size={16} className="text-brand-600" />
+                Add Sections
+              </h3>
+              <div className="grid grid-cols-2 gap-3">
+                {ALL_SECTIONS.filter(
+                  (s) => !resumeData.sectionOrder.includes(s.id),
+                ).map((section) => (
+                  <button
+                    key={section.id}
+                    onClick={() => addSection(section.id)}
+                    className="flex flex-col items-center justify-center p-3 border border-dashed border-gray-300 rounded-xl hover:border-brand-500 hover:bg-brand-50/50 transition-all group"
+                  >
+                    <div className="w-8 h-8 rounded-full bg-gray-100 group-hover:bg-white flex items-center justify-center mb-2 transition-colors">
+                      <section.icon
+                        size={16}
+                        className="text-gray-500 group-hover:text-brand-600"
+                      />
+                    </div>
+                    <span className="text-xs font-medium text-gray-600 group-hover:text-brand-700">
+                      {section.label}
+                    </span>
+                  </button>
                 ))}
-              </SortableContext>
-            </DndContext>
+                {ALL_SECTIONS.filter(
+                  (s) => !resumeData.sectionOrder.includes(s.id),
+                ).length === 0 && (
+                  <div className="col-span-2 text-center py-4 text-xs text-gray-400 italic">
+                    All sections added
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
         );
       default:
