@@ -46,9 +46,23 @@ export interface ResumeContent {
   personalInfo: PersonalInfo;
   education: Education[];
   experience: Experience[];
-  skills: Skill[];
   projects: Project[];
+  languages: Language[];
+  certifications: Certification[];
   sectionOrder: string[]; // Order of sections (e.g., ["education", "experience", "skills", "projects"])
+}
+
+export interface Language {
+  id: string;
+  name: string;
+  level: "Basic" | "Conversational" | "Fluent" | "Native";
+}
+
+export interface Certification {
+  id: string;
+  name: string;
+  issuer: string;
+  date: string;
 }
 
 // Default empty state
@@ -64,5 +78,7 @@ export const initialResumeState: ResumeContent = {
   experience: [],
   skills: [],
   projects: [],
+  languages: [],
+  certifications: [],
   sectionOrder: ["experience", "education", "skills", "projects"],
 };
