@@ -26,6 +26,7 @@ export function EditorSidebar({
     { id: "experience", label: "Experience", icon: Briefcase },
     { id: "projects", label: "Projects", icon: FolderGit2 },
     { id: "skills", label: "Skills", icon: Wrench },
+    { id: "layout", label: "Layout", icon: LayoutTemplate },
   ];
 
   return (

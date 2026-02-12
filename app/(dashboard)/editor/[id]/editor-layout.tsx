@@ -45,8 +45,6 @@ export function EditorLayout({
   const [activeSection, setActiveSection] = useState("templates");
 
   const handleDownload = async () => {
-   
-
     setIsDownloading(true);
     try {
       const response = await fetch(`/api/resume/${resumeId}/pdf`);
@@ -193,7 +191,9 @@ export function EditorLayout({
                 { id: "education", icon: GraduationCap, label: "Education" },
                 { id: "experience", icon: Briefcase, label: "Experience" },
                 { id: "projects", icon: FolderGit2, label: "Projects" },
+                { id: "projects", icon: FolderGit2, label: "Projects" },
                 { id: "skills", icon: Wrench, label: "Skills" },
+                { id: "layout", icon: LayoutTemplate, label: "Layout" },
               ].map((item) => (
                 <button
                   key={item.id}
@@ -234,11 +234,10 @@ export function EditorLayout({
               style={{
                 width: "210mm",
                 minHeight: "297mm",
-                transform: "scale(0.85)", 
+                transform: "scale(0.85)",
               }}
             >
               {renderTemplate()}
-              
             </div>
           </div>
         </div>
