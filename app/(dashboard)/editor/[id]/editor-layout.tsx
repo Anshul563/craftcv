@@ -29,6 +29,22 @@ import {
   Wrench,
 } from "lucide-react";
 import { useState } from "react";
+import {
+  DndContext,
+  closestCenter,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  DragEndEvent,
+} from "@dnd-kit/core";
+import {
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
+import { SortableSection } from "@/components/editor/sortable-section";
 
 export function EditorLayout({
   resumeId,
@@ -43,6 +59,26 @@ export function EditorLayout({
   // --- State for Sidebar Navigation ---
   const [activeTab, setActiveTab] = useState<"editor" | "preview">("editor");
   const [activeSection, setActiveSection] = useState("templates");
+  const { updateResumeData } = useResume();
+
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    }),
+  );
+
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+
+    if (active.id !== over?.id) {
+      const oldIndex = resumeData.sectionOrder.indexOf(active.id as string);
+      const newIndex = resumeData.sectionOrder.indexOf(over?.id as string);
+
+      const newOrder = arrayMove(resumeData.sectionOrder, oldIndex, newIndex);
+      updateResumeData({ sectionOrder: newOrder });
+    }
+  };
 
   const handleDownload = async () => {
     setIsDownloading(true);
@@ -103,6 +139,30 @@ export function EditorLayout({
         return <ProjectsForm />;
       case "skills":
         return <SkillsForm />;
+      case "layout":
+        return (
+          <div className="space-y-4">
+            <p className="text-sm text-gray-500 mb-4">
+              Drag and drop to reorder sections on your resume.
+            </p>
+            <DndContext
+              sensors={sensors}
+              collisionDetection={closestCenter}
+              onDragEnd={handleDragEnd}
+            >
+              <SortableContext
+                items={resumeData.sectionOrder}
+                strategy={verticalListSortingStrategy}
+              >
+                {resumeData.sectionOrder.map((sectionId) => (
+                  <SortableSection key={sectionId} id={sectionId}>
+                    <div className="font-medium capitalize">{sectionId}</div>
+                  </SortableSection>
+                ))}
+              </SortableContext>
+            </DndContext>
+          </div>
+        );
       default:
         return <PersonalInfoForm />;
     }
@@ -190,7 +250,6 @@ export function EditorLayout({
                 { id: "personal", icon: User, label: "Personal" },
                 { id: "education", icon: GraduationCap, label: "Education" },
                 { id: "experience", icon: Briefcase, label: "Experience" },
-                { id: "projects", icon: FolderGit2, label: "Projects" },
                 { id: "projects", icon: FolderGit2, label: "Projects" },
                 { id: "skills", icon: Wrench, label: "Skills" },
                 { id: "layout", icon: LayoutTemplate, label: "Layout" },

@@ -64,73 +64,127 @@ export function ModernTemplate({ data }: { data: ResumeContent }) {
         </section>
       )}
 
-      {/* Education */}
-      {education.length > 0 && (
-        <section className="mb-6">
-          <h2 className="text-sm font-bold uppercase tracking-wider text-gray-500 mb-3 border-b border-gray-200 pb-1">
-            Education
-          </h2>
-          <div className="space-y-4">
-            {education.map((edu) => (
-              <div key={edu.id}>
-                <div className="flex justify-between items-baseline mb-1">
-                  <h3 className="font-bold text-gray-900">{edu.school}</h3>
-                  <span className="text-xs text-gray-500">
-                    {edu.startDate} - {edu.endDate}
-                  </span>
-                </div>
-                <p className="text-sm text-gray-700">{edu.degree}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-      )}
-
-      {/* Experience (Placeholder for when we add the form) */}
-      {experience && experience.length > 0 && (
-        <section className="mb-6">
-          <h2 className="text-sm font-bold uppercase tracking-wider text-gray-500 mb-3 border-b border-gray-200 pb-1">
-            Experience
-          </h2>
-          <div className="space-y-4">
-            {experience.map((exp) => (
-              <div key={exp.id}>
-                <div className="flex justify-between items-baseline mb-1">
-                  <h3 className="font-bold text-gray-900">{exp.company}</h3>
-                  <span className="text-xs text-gray-500">
-                    {exp.startDate} - {exp.current ? "Present" : exp.endDate}
-                  </span>
-                </div>
-                <p className="text-sm font-semibold text-gray-700 mb-1">
-                  {exp.position}
-                </p>
-                <p className="text-sm text-gray-600 whitespace-pre-line">
-                  {exp.description}
-                </p>
-              </div>
-            ))}
-          </div>
-        </section>
-      )}
-
-      {/* Skills (Placeholder) */}
-      {skills && skills.length > 0 && (
-        <section>
-          <h2 className="text-sm font-bold uppercase tracking-wider text-gray-500 mb-3 border-b border-gray-200 pb-1">
-            Skills
-          </h2>
-          <div className="flex flex-wrap gap-2">
-            {skills.map((skill) => (
-              <span
-                key={skill.id}
-                className="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs font-medium"
-              >
-                {skill.name}
-              </span>
-            ))}
-          </div>
-        </section>
-      )}
+      {/* Dynamic Sections */}
+      {(
+        data.sectionOrder || ["experience", "education", "skills", "projects"]
+      ).map((sectionId) => {
+        switch (sectionId) {
+          case "education":
+            return (
+              education.length > 0 && (
+                <section key="education" className="mb-6">
+                  <h2 className="text-sm font-bold uppercase tracking-wider text-gray-500 mb-3 border-b border-gray-200 pb-1">
+                    Education
+                  </h2>
+                  <div className="space-y-4">
+                    {education.map((edu) => (
+                      <div key={edu.id}>
+                        <div className="flex justify-between items-baseline mb-1">
+                          <h3 className="font-bold text-gray-900">
+                            {edu.school}
+                          </h3>
+                          <span className="text-xs text-gray-500">
+                            {edu.startDate} - {edu.endDate}
+                          </span>
+                        </div>
+                        <p className="text-sm text-gray-700">{edu.degree}</p>
+                      </div>
+                    ))}
+                  </div>
+                </section>
+              )
+            );
+          case "experience":
+            return (
+              experience.length > 0 && (
+                <section key="experience" className="mb-6">
+                  <h2 className="text-sm font-bold uppercase tracking-wider text-gray-500 mb-3 border-b border-gray-200 pb-1">
+                    Experience
+                  </h2>
+                  <div className="space-y-4">
+                    {experience.map((exp) => (
+                      <div key={exp.id}>
+                        <div className="flex justify-between items-baseline mb-1">
+                          <h3 className="font-bold text-gray-900">
+                            {exp.company}
+                          </h3>
+                          <span className="text-xs text-gray-500">
+                            {exp.startDate} -{" "}
+                            {exp.current ? "Present" : exp.endDate}
+                          </span>
+                        </div>
+                        <p className="text-sm font-semibold text-gray-700 mb-1">
+                          {exp.position}
+                        </p>
+                        <p className="text-sm text-gray-600 whitespace-pre-line">
+                          {exp.description}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </section>
+              )
+            );
+          case "skills":
+            return (
+              skills.length > 0 && (
+                <section key="skills" className="mb-6">
+                  <h2 className="text-sm font-bold uppercase tracking-wider text-gray-500 mb-3 border-b border-gray-200 pb-1">
+                    Skills
+                  </h2>
+                  <div className="flex flex-wrap gap-2">
+                    {skills.map((skill) => (
+                      <span
+                        key={skill.id}
+                        className="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs font-medium"
+                      >
+                        {skill.name}
+                      </span>
+                    ))}
+                  </div>
+                </section>
+              )
+            );
+          case "projects":
+            return (
+              // Assuming data.projects exists based on ResumeContent type
+              data.projects &&
+              data.projects.length > 0 && (
+                <section key="projects" className="mb-6">
+                  <h2 className="text-sm font-bold uppercase tracking-wider text-gray-500 mb-3 border-b border-gray-200 pb-1">
+                    Projects
+                  </h2>
+                  <div className="space-y-4">
+                    {data.projects.map((project) => (
+                      <div key={project.id}>
+                        <div className="flex justify-between items-baseline mb-1">
+                          <h3 className="font-bold text-gray-900">
+                            {project.name}
+                          </h3>
+                          {project.url && (
+                            <a
+                              href={project.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-xs text-blue-600 hover:underline"
+                            >
+                              Link
+                            </a>
+                          )}
+                        </div>
+                        <p className="text-sm text-gray-600 whitespace-pre-line">
+                          {project.description}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </section>
+              )
+            );
+          default:
+            return null;
+        }
+      })}
     </div>
   );
 }
