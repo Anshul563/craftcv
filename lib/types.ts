@@ -49,6 +49,7 @@ export interface ResumeContent {
   projects: Project[];
   languages: Language[];
   certifications: Certification[];
+  skills: Skill[];
   sectionOrder: string[]; // Order of sections (e.g., ["education", "experience", "skills", "projects"])
 }
 
