@@ -181,6 +181,55 @@ export function ModernTemplate({ data }: { data: ResumeContent }) {
                 </section>
               )
             );
+            case "languages":
+              return (
+                data.languages &&
+                data.languages.length > 0 && (
+                  <section key="languages" className="mb-6">
+                    <h2 className="text-sm font-bold uppercase tracking-wider text-gray-500 mb-3 border-b border-gray-200 pb-1">
+                      Languages
+                    </h2>
+                    <div className="flex flex-wrap gap-4">
+                      {data.languages.map((lang) => (
+                        <div key={lang.id} className="flex items-center gap-2">
+                          <span className="font-semibold text-gray-900">
+                            {lang.name}
+                          </span>
+                          <span className="text-sm text-gray-500">
+                            - {lang.level}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </section>
+                )
+              );
+            case "certifications":
+              return (
+                data.certifications &&
+                data.certifications.length > 0 && (
+                  <section key="certifications" className="mb-6">
+                    <h2 className="text-sm font-bold uppercase tracking-wider text-gray-500 mb-3 border-b border-gray-200 pb-1">
+                      Certifications
+                    </h2>
+                    <div className="space-y-4">
+                      {data.certifications.map((cert) => (
+                        <div key={cert.id}>
+                          <div className="flex justify-between items-baseline mb-1">
+                            <h3 className="font-bold text-gray-900">
+                              {cert.name}
+                            </h3>
+                            <span className="text-xs text-gray-500">
+                              {cert.date}
+                            </span>
+                          </div>
+                          <p className="text-sm text-gray-700">{cert.issuer}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </section>
+                )
+              );
           default:
             return null;
         }
@@ -188,3 +237,4 @@ export function ModernTemplate({ data }: { data: ResumeContent }) {
     </div>
   );
 }
+```
