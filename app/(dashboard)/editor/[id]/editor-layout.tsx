@@ -4,6 +4,8 @@ import { ExperienceForm } from "@/components/editor/experience-form";
 import { PersonalInfoForm } from "@/components/editor/personal-info-form";
 import { ProjectsForm } from "@/components/editor/projects-form";
 import { SkillsForm } from "@/components/editor/skills-form";
+import { CertificationsForm } from "@/components/editor/certifications-form";
+import { LanguagesForm } from "@/components/editor/languages-form";
 import { TemplateSelector } from "@/components/editor/template-selector";
 import { Watermark } from "@/components/ui/watermark";
 import { CreativeTemplate } from "@/components/templates/creative-template";
@@ -27,6 +29,10 @@ import {
   Briefcase,
   FolderGit2,
   Wrench,
+  Plus,
+  Trash2,
+  Globe,
+  Award,
 } from "lucide-react";
 import { useState } from "react";
 import {
@@ -45,6 +51,16 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { SortableSection } from "@/components/editor/sortable-section";
+
+// Define ALL possible sortable sections
+const ALL_SECTIONS = [
+  { id: "education", label: "Education", icon: GraduationCap },
+  { id: "experience", label: "Experience", icon: Briefcase },
+  { id: "projects", label: "Projects", icon: FolderGit2 },
+  { id: "skills", label: "Skills", icon: Wrench },
+  { id: "languages", label: "Languages", icon: Globe },
+  { id: "certifications", label: "Certifications", icon: Award },
+];
 
 export function EditorLayout({
   resumeId,
