@@ -34,7 +34,7 @@ export function SortableSection({ id, children }: SortableSectionProps) {
       <div
         {...attributes}
         {...listeners}
-        className="cursor-grab text-gray-400 hover:text-gray-600 active:cursor-grabbing"
+        className="cursor-grab text-gray-400 hover:text-gray-600 active:cursor-grabbing touch-none"
       >
         <GripVertical size={16} />
       </div>
