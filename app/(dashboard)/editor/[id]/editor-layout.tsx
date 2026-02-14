@@ -34,7 +34,7 @@ import {
   Globe,
   Award,
 } from "lucide-react";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import {
   DndContext,
   closestCenter,
@@ -76,6 +76,44 @@ export function EditorLayout({
   const [activeTab, setActiveTab] = useState<"editor" | "preview">("editor");
   const [activeSection, setActiveSection] = useState("templates");
   const { updateResumeData } = useResume();
+
+  // --- Resume Scaling Logic ---
+  const [scale, setScale] = useState(0.85);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const updateScale = () => {
+      if (containerRef.current) {
+        const parentWidth =
+          containerRef.current.parentElement?.offsetWidth || window.innerWidth;
+        const a4Width = 794; // approx 210mm in pixels at 96dpi (standard web)
+        const margin = 32; // 16px padding on each side
+
+        let newScale = (parentWidth - margin) / a4Width;
+        // Cap the max scale at 1.0 (or slightly larger if user has huge screen) and min at ~0.3
+        newScale = Math.min(Math.max(newScale, 0.3), 1.2);
+
+        setScale(newScale);
+      }
+    };
+
+    // Initial calculation
+    updateScale();
+
+    // Add listener
+    window.addEventListener("resize", updateScale);
+
+    // Also use ResizeObserver for container size changes (e.g. sidebar toggle)
+    const observer = new ResizeObserver(updateScale);
+    if (containerRef.current?.parentElement) {
+      observer.observe(containerRef.current.parentElement);
+    }
+
+    return () => {
+      window.removeEventListener("resize", updateScale);
+      observer.disconnect();
+    };
+  }, []);
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -390,16 +428,27 @@ export function EditorLayout({
           }`}
         >
           <div className="flex-1 overflow-auto p-4 lg:p-12 flex justify-center items-start">
-            {/* A4 Paper Container */}
+            {/* A4 Paper Container Wrapper for Scaling */}
             <div
-              className="bg-white shadow-2xl shadow-gray-900/5 rounded-sm overflow-hidden transform-gpu transition-transform duration-500 origin-top animate-fade-in-up"
+              ref={containerRef}
+              className="w-full flex justify-center origin-top transition-transform duration-300 ease-out"
               style={{
-                width: "210mm",
-                minHeight: "297mm",
-                transform: "scale(0.85)",
+                transform: `scale(${scale})`,
+                transformOrigin: "top center",
+                marginBottom: `${scale * 100}px`, // Add margin to scroll safely
               }}
             >
-              {renderTemplate()}
+              {/* A4 Paper */}
+              <div
+                className="bg-white shadow-2xl shadow-gray-900/5 rounded-sm overflow-hidden"
+                style={{
+                  width: "210mm",
+                  minHeight: "297mm",
+                  // transform: "scale(0.85)", // Handled by wrapper now
+                }}
+              >
+                {renderTemplate()}
+              </div>
             </div>
           </div>
         </div>
